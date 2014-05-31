@@ -3,64 +3,7 @@ require 'map'
 require 'redis'
 
 module Flume
-##
-#
-  class << Flume
-    def version
-      '0.0.3'
-    end
-
-    def description
-      'a K.I.S.S auto-rotating redis logger for ruby/rails'
-    end
-
-    def dependencies
-      {
-        'map'             => [ 'map'           , ' >= 6.0.1' ],
-        'redis'           => [ 'redis'         , ' >= 2.2.2' ]
-      }
-    end
-  end
-
-  begin
-    require 'rubygems'
-  rescue LoadError
-    nil
-  end
-
-  dependencies.each do |lib, dependency|
-    gem(*dependency) if defined?(gem)
-    require(lib)
-  end
-
-##
-#
-  class << Flume
-    def logger(*args, &block)
-      return rails_logger(*args, &block) if defined?(::Rails.application)
-
-      Logger.new(*args, &block)
-    end
-
-    def rails_logger(*args, &block)
-      config = ::Rails.application.config
-
-      logger = Logger.new(*args, &block)
-
-      if defined?(::ActiveSupport::TaggedLogging)
-        logger = ::ActiveSupport::TaggedLogging.new(logger)
-      end
-
-      logger.level = config.log_level
-
-      logger
-    end
-  end
-
-##
-#
   class Logger < ::Logger
-  #
     attr_accessor :logdev
     attr_accessor :formatter
 
@@ -179,15 +122,6 @@ module Flume
           truncate(@cap) rescue nil
         end
         @step = (@step + 1) % @cycle
-      end
-
-      if defined?(Rails::Server) and STDOUT.tty? and not defined?(ActiveSupport::Logger.broadcast)
-        alias_method('__write__', 'write')
-
-        def write(message, &block)
-          STDOUT.puts(message)
-          __write__(message, &block)
-        end
       end
 
       def close
