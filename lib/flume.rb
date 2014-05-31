@@ -1,5 +1,6 @@
 require "flume/version"
+require "flume/logger"
 
 module Flume
-  # Your code goes here...
 end
+
