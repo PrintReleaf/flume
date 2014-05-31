@@ -20,20 +20,13 @@ module Flume
     end
 
     class LogDevice
-      attr_accessor :config
       attr_accessor :cap
       attr_accessor :step
       attr_accessor :cycle
       attr_accessor :list
 
       def initialize(*args, &block)
-        config = Map.options_for!(args)
-        config[:redis] ||= args.shift
-        configure(config, &block)
-      end
-
-      def configure(config = {}, &block)
-        @config = Map.for(config)
+        @config = Map.new
 
         block.call(@config) if block
 
