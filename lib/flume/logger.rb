@@ -4,78 +4,21 @@ require 'redis'
 
 module Flume
   class Logger < ::Logger
-    attr_accessor :logdev
-    attr_accessor :formatter
+    extend Forwardable
+
+    attr_reader :logdev
+    def_delegators :logdev, :redis, :redis=
+    def_delegators :logdev, :list,  :list=
+    def_delegators :logdev, :cap,   :cap=
+    def_delegators :logdev, :step,  :step=
+    def_delegators :logdev, :cycle, :cycle=
+    def_delegators :logdev, :tail,  :truncate, :size
 
     def initialize(*args, &block)
       super(STDERR)
       @logdev = LogDevice.new(*args, &block)
-      @formatter = Formatter.new
     end
 
-    class Formatter < ::Logger::Formatter
-      Format  = "%s, [%s#%d] %5s : %s\n"
-
-      def call(severity, time, progname, msg)
-        Format %
-          [severity[0..0], format_datetime(time), pid, severity, msg2str(msg)]
-      end
-
-      def pid
-        $$
-      end
-    end
-
-    def << (*args)
-      super
-      self
-    end
-
-    def level=(level)
-      @level = level_for(level)
-    end
-
-    Levels =
-      Hash[ Severity.constants.map{|c| [c.to_s.downcase, Severity.const_get(c)]} ]
-
-    def level_for(level)
-      case level
-        when Integer
-          Levels[ Levels.invert[level] || 0 ]
-        else
-          Levels[ level.to_s.downcase || 'debug' ]
-      end
-    end
-
-    %w(
-      redis redis=
-      list list=
-      cap cap=
-      step step=
-      cycle cycle=
-      tail
-      truncate
-      size
-    ).each do |method|
-      case method
-        when /=/
-          class_eval <<-__, __FILE__, __LINE__
-            def #{ method }(arg)
-              @logdev.#{ method }(arg)
-            end
-          __
-
-        else
-          class_eval <<-__, __FILE__, __LINE__
-            def #{ method }(*args, &block)
-              @logdev.#{ method }(*args, &block)
-            end
-          __
-      end
-    end
-
-  ##
-  #
     class LogDevice
       attr_accessor :config
       attr_accessor :cap
@@ -142,3 +85,4 @@ module Flume
     end
   end
 end
+
