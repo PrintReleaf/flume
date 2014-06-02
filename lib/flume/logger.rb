@@ -1,6 +1,6 @@
 require 'logger'
 require 'laissez'
-require 'map'
+require 'ostruct'
 require 'redis'
 
 module Flume
@@ -28,7 +28,7 @@ module Flume
       lazy_accessor :cap
 
       def initialize(*args, &block)
-        @config = Map.new
+        @config = OpenStruct.new
 
         block.call(@config) if block
 

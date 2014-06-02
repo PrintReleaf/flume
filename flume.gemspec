@@ -19,7 +19,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "redis"
-  spec.add_dependency "map"
   spec.add_dependency "laissez", "~> 0.0.2"
 
   spec.add_development_dependency "bundler", "~> 1.6"
