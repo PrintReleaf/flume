@@ -16,8 +16,9 @@ describe Flume, ".logger" do
 
   it "returns a new logger" do
     logger = Flume.logger do |config|
-      config.redis = $redis
+      config.redis = lambda { $redis }
       config.list = "flume:test:log"
+      config.cap = proc { 1 > 0 ? 1024 : 2048 }
     end
 
     logger.unknown "An unknown message that should always be logged."
@@ -42,6 +43,7 @@ describe Flume, ".logger" do
 
     expect(logger.redis).to eql($redis)
     expect(logger.list).to eql("flume:test:log")
+    expect(logger.cap).to eql(1024)
     expect(logger.size).to eql(6)
 
     logger.truncate(3)

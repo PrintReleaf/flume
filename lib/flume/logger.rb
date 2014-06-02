@@ -1,4 +1,5 @@
 require 'logger'
+require 'laissez'
 require 'map'
 require 'redis'
 
@@ -20,29 +21,22 @@ module Flume
     end
 
     class LogDevice
-      attr_accessor :cap
-      attr_accessor :step
-      attr_accessor :cycle
-      attr_accessor :list
+      lazy_accessor :step
+      lazy_accessor :cycle
+      lazy_accessor :list
+      lazy_accessor :redis
+      lazy_accessor :cap
 
       def initialize(*args, &block)
         @config = Map.new
 
         block.call(@config) if block
 
-        @redis = @config[:redis] || @redis
+        @redis = @config[:redis] || proc { Redis.new }
         @cap   = @config[:cap]   || (2 ** 16)
         @step  = @config[:step]  || 0
         @cycle = @config[:cycle] || (2 ** 8)
         @list  = @config[:list]  || 'flume:log'
-      end
-
-      def redis
-        @redis ||= Redis.new
-      end
-
-      def redis=(redis)
-        @redis = redis
       end
 
       def write(message)
@@ -54,10 +48,10 @@ module Flume
           STDERR.puts(message)
         end
       ensure
-        if (@step % @cycle).zero?
-          truncate(@cap) rescue nil
+        if (step % cycle).zero?
+          truncate(cap) rescue nil
         end
-        @step = (@step + 1) % @cycle
+        self.step = (step + 1) % cycle
       end
 
       def close
