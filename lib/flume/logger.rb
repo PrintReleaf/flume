@@ -28,8 +28,9 @@ module Flume
       lazy_accessor :cap
 
       def initialize(*args, &block)
-        @config = OpenStruct.new
+        options = args.last.is_a?(Hash) ? args.pop : {}
 
+        @config = OpenStruct.new(options)
         block.call(@config) if block
 
         @redis = @config[:redis] || proc { Redis.new }

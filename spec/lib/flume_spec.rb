@@ -15,9 +15,8 @@ describe Flume, ".logger" do
   after  { Timecop.return }
 
   it "returns a new logger" do
-    logger = Flume.logger do |config|
-      config.redis = lambda { $redis }
-      config.list = "flume:test:log"
+    logger = Flume.logger :list => "flume:test:log" do |config|
+      config.redis = $redis
       config.cap = proc { 1 > 0 ? 1024 : 2048 }
     end
 
