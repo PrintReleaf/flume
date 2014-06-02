@@ -1,4 +1,10 @@
+require 'logger'
+require 'ostruct'
+require 'redis'
+require 'laissez'
+
 require "flume/version"
+require "flume/log_device"
 require "flume/logger"
 
 module Flume
