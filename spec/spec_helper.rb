@@ -7,6 +7,15 @@
 #
 
 require "flume"
+require 'mock_redis'
+require 'timecop'
+
+$redis = MockRedis.new
+
+def clear_redis!
+  keys = $redis.keys('*')
+  $redis.del(*keys) if keys.any?
+end
 
 RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true

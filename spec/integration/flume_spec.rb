@@ -1,20 +1,11 @@
 require 'spec_helper'
-require 'mock_redis'
-require 'timecop'
 
-$redis = MockRedis.new
-
-def clear_redis!
-  keys = $redis.keys('*')
-  $redis.del(*keys) if keys.any?
-end
-
-describe Flume, ".logger" do
+describe Flume do
   before { clear_redis! }
   before { Timecop.freeze(Time.local(2014)) }
   after  { Timecop.return }
 
-  it "returns a new logger" do
+  it "writes to Redis" do
     logger = Flume.logger :list => "flume:test:log" do |config|
       config.redis = $redis
       config.cap = proc { 1 > 0 ? 1024 : 2048 }
