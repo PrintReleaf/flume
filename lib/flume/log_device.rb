@@ -1,10 +1,10 @@
 module Flume
   class LogDevice
+    lazy_accessor :redis
+    lazy_accessor :cap
     lazy_accessor :step
     lazy_accessor :cycle
     lazy_accessor :list
-    lazy_accessor :redis
-    lazy_accessor :cap
 
     def initialize(*args, &block)
       options = args.last.is_a?(Hash) ? args.pop : {}
@@ -42,8 +42,8 @@ module Flume
       redis.lrange(list, 0, n - 1).reverse
     end
 
-    def truncate(size)
-      redis.ltrim(list, 0, size - 1)
+    def truncate(n)
+      redis.ltrim(list, 0, n - 1)
     end
 
     def size
