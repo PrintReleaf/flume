@@ -8,7 +8,8 @@ module Flume
     def_delegators :logdev, :cap,   :cap=
     def_delegators :logdev, :step,  :step=
     def_delegators :logdev, :cycle, :cycle=
-    def_delegators :logdev, :tail,  :truncate, :size
+    def_delegators :logdev, :truncate, :size
+    def_delegators :logdev, :tail, :tailf
 
     def initialize(*args, &block)
       super(STDERR)

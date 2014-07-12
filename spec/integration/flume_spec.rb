@@ -1,9 +1,15 @@
 require 'spec_helper'
 
 describe Flume do
-  before { clear_redis! }
-  before { Timecop.freeze(Time.local(2014)) }
-  after  { Timecop.return }
+  before do
+    clear_redis!
+    $redis.stub(:publish)
+    Timecop.freeze(Time.local(2014))
+  end
+
+  after do
+    Timecop.return
+  end
 
   it "writes to Redis" do
     logger = Flume.logger :list => "flume:test:log" do |config|

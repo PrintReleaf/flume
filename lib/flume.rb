@@ -1,5 +1,8 @@
+require 'forwardable'
 require 'logger'
 require 'ostruct'
+
+require 'thor'
 require 'redis'
 require 'laissez'
 

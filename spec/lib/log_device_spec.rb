@@ -65,6 +65,13 @@ describe Flume::LogDevice, ".new" do
   end
 end
 
+describe Flume::LogDevice, "#channel" do
+  it "returns its pubsub channel" do
+    logdev = Flume::LogDevice.new list: "my:list"
+    expect(logdev.channel).to eql "flume:my:list"
+  end
+end
+
 describe Flume::LogDevice, "#write" do
   it "pushes the message onto the redis list" do
     redis = double.as_null_object
@@ -80,6 +87,13 @@ describe Flume::LogDevice, "#write" do
     32.times do
       logdev.write("hello world")
     end
+  end
+
+  it "publishes the message to its channel" do
+    redis = double.as_null_object
+    logdev = Flume::LogDevice.new(redis: redis, list: "my:list")
+    expect(redis).to receive(:publish).with("flume:my:list", "my message")
+    logdev.write("my message")
   end
 
   context "when there is an error writing to redis" do
