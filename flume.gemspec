@@ -7,10 +7,10 @@ Gem::Specification.new do |spec|
   spec.name          = "flume"
   spec.version       = Flume::VERSION
   spec.authors       = ["Casey O'Hara"]
-  spec.email         = ["casey.ohara@me.com"]
+  spec.email         = ["cohara@printreleaf.com"]
   spec.summary       = "Redis logger"
   spec.description   = "A Redis logger for Ruby/Rails"
-  spec.homepage      = "https://github.com/caseyohara/flume"
+  spec.homepage      = "https://github.com/printreleaf/flume"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
