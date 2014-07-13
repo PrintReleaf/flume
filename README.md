@@ -87,9 +87,9 @@ end
 ### CLI:
 
 ```bash
-$ flume tail myapp:list
-$ flume tail myapp:list -f
-$ flume tail myapp:list -n 1000
+$ flume tail myapp:log
+$ flume tail myapp:log -f
+$ flume tail myapp:log -n 1000
 ```
 
 To specify which Redis:
