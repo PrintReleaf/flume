@@ -95,7 +95,7 @@ $ flume tail myapp:log -n 1000
 To specify which Redis:
 
 ```bash
-$ REDIS_URL=redis://12.34.56.78:9101 flume tail myapp:list
+$ REDIS_URL=redis://12.34.56.78:9101 flume tail myapp:log
 ```
 
 
