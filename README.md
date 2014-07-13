@@ -1,4 +1,4 @@
-# Flume
+# Flume [![Build Status](https://travis-ci.org/PrintReleaf/flume.png?branch=master)](https://travis-ci.org/PrintReleaf/flume)
 
 An unfancy Redis logger for Ruby.
 
