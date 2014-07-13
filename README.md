@@ -1,6 +1,8 @@
 # Flume
 
-An unfancy Redis logger for Ruby. Works great with Rails, auto-truncates logs at a configurable size, and has a dead-simple CLI for tailing.
+An unfancy Redis logger for Ruby.
+
+Works great with Rails, auto-truncates logs at a configurable size, and has a dead-simple CLI for tailing.
 
 ### Usage:
 
