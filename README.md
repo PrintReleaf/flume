@@ -101,13 +101,7 @@ $ REDIS_URL=redis://12.34.56.78:9101 flume tail myapp:list
 
 ### Why log to Redis?
 
-Redis is cheap, ubiquitous, and often centralized. Its [PubSub](http://redis.io/topics/pubsub) feature is perfect for tailing a list.
-
-
-### Why not use &lt;insert fancy log software&gt;?
-
-For most tiny-to-small webapps, the complexity of something like [logstash](http://logstash.net/) or [graylog2](http://graylog2.org/) simply isn't worth it.
-Even if your deployment has, say, one app server and one queue server, you probably don't need analytics or processing, you just need a unified app log to find out what happened when things go wrong.
+Redis is cheap, ubiquitous, and centralized in most deployments, making it a lightweight log target for tiny-to-small webapps. Also, its [PubSub](http://redis.io/topics/pubsub) feature is perfect for tailing a list-based log.
 
 
 ## Installation
