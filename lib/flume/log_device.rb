@@ -12,11 +12,11 @@ module Flume
       @config = OpenStruct.new(options)
       block.call(@config) if block
 
-      @redis = @config[:redis] || proc { Redis.new }
-      @cap   = @config[:cap]   || (2 ** 16)
-      @step  = @config[:step]  || 0
-      @cycle = @config[:cycle] || (2 ** 8)
-      @list  = @config[:list]  || 'flume:log'
+      @redis = @config.redis || proc { Redis.new }
+      @cap   = @config.cap   || (2 ** 16)
+      @step  = @config.step  || 0
+      @cycle = @config.cycle || (2 ** 8)
+      @list  = @config.list  || 'flume:log'
     end
 
 
