@@ -52,31 +52,31 @@ end
     <tr>
       <td>:redis</td>
       <td>Redis instance to use</td>
-      <td>`Redis.new`</td>
+      <td>Redis.new</td>
     </tr>
 
     <tr>
       <td>:list</td>
       <td>Redis list to write to</td>
-      <td>`'flume:log'`</td>
+      <td>'flume:log'</td>
     </tr>
 
     <tr>
       <td>:cap</td>
       <td>Truncation size</td>
-      <td>`2 ** 16`</td>
+      <td>2 ** 16</td>
     </tr>
 
     <tr>
       <td>:step</td>
       <td>Truncation step</td>
-      <td>`0`</td>
+      <td>0</td>
     </tr>
 
     <tr>
       <td>:cycle</td>
       <td>Truncation cyle</td>
-      <td>`2 ** 8`</td>
+      <td>2 ** 8</td>
     </tr>
   </tbody>
 </table>
