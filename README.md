@@ -12,6 +12,10 @@ Works great with Rails, auto-truncates logs at a configurable size, and has a de
 # config/application.rb
 # or config/environments/{development|production|etc}.rb
 
+config.logger = Flume.logger
+
+# With options:
+
 config.logger = Flume.logger do |logger|
   logger.redis = Redis.new
   logger.list  = "#{Rails.env}:log"
