@@ -5,7 +5,6 @@ module Flume
     option :f, :type => :boolean, :default => false
     option :number, :type => :numeric, :default => 80, :aliases => :n
     def tail(list)
-      puts options
       logger = Flume.logger :list => list
       puts logger.tail(options[:number])
 
