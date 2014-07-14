@@ -1,4 +1,4 @@
-Copyright (c) 2014 Casey O'Hara
+Copyright (c) 2014 PrintReleaf
 
 MIT License
 
