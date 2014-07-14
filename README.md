@@ -91,6 +91,7 @@ end
 ### CLI:
 
 ```bash
+$ flume tail <LIST>
 $ flume tail myapp:log
 $ flume tail myapp:log -f
 $ flume tail myapp:log -n 1000
