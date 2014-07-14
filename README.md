@@ -14,7 +14,7 @@ Works great with Rails, auto-truncates logs at a configurable size, and has a de
 
 config.logger = Flume.logger
 
-# With options:
+# Or, with options:
 
 config.logger = Flume.logger do |logger|
   logger.redis = Redis.new
