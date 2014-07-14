@@ -19,11 +19,9 @@ module Flume
       @list  = @config.list  || 'flume:log'
     end
 
-
     def channel
       "flume:#{list}"
     end
-
 
     def write(message)
       begin
@@ -43,16 +41,13 @@ module Flume
       self.step = (step + 1) % cycle
     end
 
-
     def close
       redis.quit rescue nil
     end
 
-
     def tail(n = 80)
       redis.lrange(list, 0, n - 1).reverse
     end
-
 
     def tailf(&block)
       begin
@@ -68,16 +63,13 @@ module Flume
       end
     end
 
-
     def truncate(n)
       redis.ltrim(list, 0, n - 1)
     end
 
-
     def size
       redis.llen(list)
     end
-
   end
 end
 
