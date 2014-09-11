@@ -16,5 +16,10 @@ module Flume
       end
     end
 
+    desc "version", "show Flume version and quit"
+    def version
+      puts "Flume #{Flume::VERSION}"
+    end
+
   end
 end
